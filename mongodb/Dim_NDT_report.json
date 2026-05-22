@@ -1,0 +1,30 @@
+{
+  "reportId": "QC-784512-A1",
+  "partId": "A-320-WING-01",
+  "inspectionDate": "2025-08-28",
+  "inspector": {
+    "name": "Jane Doe",
+    "employeeId": "J.D.753"
+  },
+  "results": {
+    "visualInspection": "Pass",
+    "dimensionalTolerance": {
+      "result": "Pass",
+      "measurements": [
+        {"dimension": "length", "measured": 15.002, "unit": "m"},
+        {"dimension": "width", "measured": 3.499, "unit": "m"}
+      ],
+      "deviation": 0.002
+    },
+    "nondestructiveTesting": {
+      "type": "Ultrasonic",
+      "result": "Pass",
+      "comments": "No internal defects detected."
+    }
+  },
+  "certification": {
+    "certifiedBy": "John Smith",
+    "certDate": "2025-08-29",
+    "stamp": "CertifiedOK"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "reportId": "QC-889234-Z9",
+  "partId": "B-737-FUSE-02",
+  "inspectionDate": "2025-09-01",
+  "inspector": {
+    "name": "Ahmed Khan",
+    "employeeId": "AK.455"
+  },
+  "environmentalTest": {
+    "temperatureRange": "-55 to 70C",
+    "humidityExposure": "95% RH for 48 hours",
+    "result": "Pass"
+  },
+  "notes": "Component withstood environmental stress without cracking or warping."
+}

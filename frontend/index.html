@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroNetB — Aerospace Supply Chain Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#0b0d14;--surface:#12151f;--card:#181b28;--border:#1f2335;--border-hover:#2d3250;--text:#e2e4ea;--text-muted:#6b7189;--text-dim:#464a5e;--accent:#3b7ddd;--accent-glow:rgba(59,125,221,0.12);--accent-hover:#4f8de5;--green:#0ecf7d;--yellow:#f0b429;--red:#ef4444;--purple:#8b5cf6;--radius:10px}
+        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+        ::selection{background:var(--accent);color:#fff}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+        .login-page{display:flex;min-height:100vh}
+        .login-left{flex:1;display:flex;justify-content:center;align-items:center;padding:40px}
+        .login-right{width:480px;background:linear-gradient(145deg,#151929,#1a1f35);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px;border-left:1px solid var(--border)}
+        .login-brand{text-align:center;margin-bottom:40px}
+        .login-brand h1{font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+        .login-brand p{font-size:13px;color:var(--text-muted);margin-top:6px}
+        .login-form{width:100%;max-width:340px}
+        .field{margin-bottom:20px}
+        .field label{display:block;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px}
+        .field input{width:100%;padding:13px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;transition:all .2s}
+        .field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .field input::placeholder{color:var(--text-dim)}
+        .login-btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:0.3px}
+        .login-btn:hover{background:var(--accent-hover);box-shadow:0 4px 20px rgba(59,125,221,0.3);transform:translateY(-1px)}
+        .login-error{color:var(--red);font-size:13px;margin-bottom:16px;display:none;padding:12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);border-radius:var(--radius)}
+        .login-footer{margin-top:32px;text-align:center;font-size:11px;color:var(--text-dim);line-height:1.6}
+        .hero-content{max-width:420px}
+        .hero-content .tag{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-glow);padding:5px 12px;border-radius:20px;margin-bottom:20px}
+        .hero-content h2{font-size:38px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:16px}
+        .hero-content h2 span{color:var(--accent)}
+        .hero-content p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:32px}
+        .hero-stats{display:flex;gap:32px}
+        .hero-stat .num{font-size:28px;font-weight:800;color:#fff}
+        .hero-stat .lbl{font-size:12px;color:var(--text-dim);margin-top:2px}
+
+        .app{display:none;height:100vh}
+        .sidebar{width:250px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:10}
+        .sb-logo{padding:22px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+        .sb-logo .mark{width:32px;height:32px;background:linear-gradient(135deg,#3b7ddd,#2456a4);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff}
+        .sb-logo .text{font-size:15px;font-weight:700;color:#fff}
+        .sb-logo .text span{display:block;font-size:10px;color:var(--text-dim);font-weight:400;margin-top:1px}
+        .sb-nav{flex:1;padding:16px 10px;overflow-y:auto}
+        .sb-section{margin-bottom:20px}
+        .sb-section-title{font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;padding:0 14px;margin-bottom:6px}
+        .sb-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text-muted);transition:all .12s;position:relative}
+        .sb-item:hover{background:rgba(59,125,221,0.06);color:var(--text)}
+        .sb-item.active{background:var(--accent-glow);color:var(--accent);font-weight:600}
+        .sb-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--accent);border-radius:0 3px 3px 0}
+        .sb-item .ic{font-size:16px;width:22px;text-align:center;opacity:0.7}
+        .sb-item.active .ic{opacity:1}
+        .sb-foot{padding:14px;border-top:1px solid var(--border)}
+        .sb-user{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;background:var(--bg)}
+        .sb-avatar{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#3b7ddd,#6366f1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
+        .sb-uinfo{flex:1;min-width:0}
+        .sb-uinfo .name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .sb-uinfo .role{font-size:11px;color:var(--text-dim)}
+        .sb-logout{background:none;border:1px solid var(--border);color:var(--text-muted);padding:5px 8px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .15s;flex-shrink:0}
+        .sb-logout:hover{border-color:var(--red);color:var(--red)}
+
+        .main{margin-left:250px;min-height:100vh;display:flex;flex-direction:column}
+        .topbar{padding:18px 32px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;justify-content:space-between;align-items:center}
+        .topbar .left .crumb{font-size:12px;color:var(--text-dim);margin-bottom:2px}
+        .topbar .left h1{font-size:18px;font-weight:700;color:#fff}
+        .live{display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(14,207,125,0.08);border:1px solid rgba(14,207,125,0.15);border-radius:20px;color:var(--green);font-size:12px;font-weight:500}
+        .live::before{content:'';width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+        .content{flex:1;padding:28px 32px}
+
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px}
+        .st{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .2s}
+        .st:hover{border-color:var(--border-hover)}
+        .st .l{font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+        .st .v{font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px}
+        .st .s{font-size:11px;color:var(--text-dim);margin-top:4px}
+
+        .tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+        .tbl-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+        .tbl-head h3{font-size:14px;font-weight:700;color:#fff}
+        .tbl-head .cnt{font-size:11px;color:var(--text-dim);background:var(--bg);padding:4px 10px;border-radius:5px;font-weight:500}
+        table{width:100%;border-collapse:collapse}
+        th{padding:11px 20px;text-align:left;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.7px;background:rgba(0,0,0,.25);border-bottom:1px solid var(--border)}
+        td{padding:13px 20px;font-size:13px;color:#c0c3ce;border-bottom:1px solid rgba(31,35,53,.6)}
+        tr:last-child td{border-bottom:none}
+        tr:hover td{background:rgba(59,125,221,.03)}
+        .mono{font-family:'Courier New',monospace;font-size:12px}
+
+        .b{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600}
+        .b-g{background:rgba(14,207,125,.1);color:#0ecf7d}.b-y{background:rgba(240,180,41,.1);color:#f0b429}
+        .b-b{background:rgba(59,125,221,.1);color:#3b7ddd}.b-r{background:rgba(239,68,68,.1);color:#ef4444}
+        .b-p{background:rgba(139,92,246,.1);color:#8b5cf6}.b-d{background:rgba(107,113,137,.1);color:#6b7189}
+
+        .footer{padding:16px 32px;border-top:1px solid var(--border);background:var(--surface);margin-left:250px;display:flex;justify-content:space-between;align-items:center}
+        .footer .fl{font-size:11px;color:var(--text-dim)}
+        .footer .fl strong{color:var(--text-muted)}
+        .footer .fr{display:flex;gap:12px}
+        .footer .fr .chip{padding:3px 10px;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--text-muted);font-size:11px;font-weight:500}
+
+        .loading{text-align:center;padding:60px;color:var(--text-dim);font-size:13px}
+        .denied{text-align:center;padding:80px}
+        .denied .di{font-size:48px;margin-bottom:16px;opacity:.5}
+        .denied h3{color:var(--red);font-size:15px;font-weight:600;margin-bottom:6px}
+        .denied p{color:var(--text-dim);font-size:13px}
+        @media(max-width:900px){.login-left{display:none}.login-right{width:100%;border:none}.sidebar{width:200px}.main,.footer{margin-left:200px}}
+    </style>
+</head>
+<body>
+<div class="login-page" id="loginPage">
+    <div class="login-left"><div class="hero-content">
+        <div class="tag">Enterprise Platform</div>
+        <h2>Aerospace <span>Supply Chain</span> Intelligence</h2>
+        <p>End-to-end visibility across suppliers, procurement, quality assurance, and IoT-enabled manufacturing — powered by a hybrid cloud architecture.</p>
+        <div class="hero-stats"><div class="hero-stat"><div class="num">200+</div><div class="lbl">Global Suppliers</div></div><div class="hero-stat"><div class="num">99.7%</div><div class="lbl">Uptime SLA</div></div><div class="hero-stat"><div class="num">24/7</div><div class="lbl">IoT Monitoring</div></div></div>
+    </div></div>
+    <div class="login-right">
+        <div class="login-brand"><h1>AeroNetB Enterprise server</h1><p>Sign in to your account</p></div>
+        <div class="login-form">
+            <div class="login-error" id="loginError"></div>
+            <div class="field"><label>Email</label><input type="email" id="email" placeholder="you@aeronetb.com"></div>
+            <div class="field"><label>Password</label><input type="password" id="password" placeholder="Enter password"></div>
+            <button class="login-btn" onclick="login()">Sign In</button>
+            <div class="login-footer">Secured with JWT authentication &amp; RBAC.<br>AeroNetB Aerospace &copy; 2025</div>
+        </div>
+    </div>
+</div>
+<div class="app" id="app">
+    <aside class="sidebar">
+        <div class="sb-logo"><div class="mark">A</div><div class="text">AeroNetB<span>Supply Chain ASCM</span></div></div>
+        <nav class="sb-nav" id="sbNav"></nav>
+        <div class="sb-foot"><div class="sb-user"><div class="sb-avatar" id="uAvatar"></div><div class="sb-uinfo"><div class="name" id="uName"></div><div class="role" id="uRole"></div></div><button class="sb-logout" onclick="logout()">Logout</button></div></div>
+    </aside>
+    <main class="main">
+        <div class="topbar"><div class="left"><div class="crumb" id="crumb">Dashboard</div><h1 id="pTitle">Overview</h1></div><div class="right"><div class="live">System Operational</div></div></div>
+        <div class="content" id="content"></div>
+    </main>
+    <footer class="footer"><div class="fl">&copy; 2025 <strong>AeroNetB Aerospace</strong> &mdash; 5CM506 Data Driven Systems | Hybrid Cloud Architecture</div><div class="fr"><span class="chip">PostgreSQL</span><span class="chip">MongoDB Atlas</span><span class="chip">Node.js</span><span class="chip">REST API</span></div></footer>
+</div>
+<script>
+const API=window.location.origin+'/api';let token='',user=null;
+async function login(){const e=document.getElementById('email').value,p=document.getElementById('password').value,err=document.getElementById('loginError');err.style.display='none';if(!e||!p){err.textContent='Please enter your credentials.';err.style.display='block';return}try{const r=await fetch(`${API}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,password:p})});const d=await r.json();if(!r.ok){err.textContent=d.error||'Authentication failed.';err.style.display='block';return}token=d.token;user=d.user;document.getElementById('loginPage').style.display='none';document.getElementById('app').style.display='flex';document.getElementById('uName').textContent=user.name;document.getElementById('uRole').textContent=user.role.replace(/([A-Z])/g,' $1').trim();document.getElementById('uAvatar').textContent=user.name.split(' ').map(n=>n[0]).join('');buildNav();go('overview')}catch(x){err.textContent='Cannot reach the server.';err.style.display='block'}}
+function logout(){token='';user=null;document.getElementById('loginPage').style.display='flex';document.getElementById('app').style.display='none'}
+async function api(ep){try{const r=await fetch(`${API}${ep}`,{headers:{'Authorization':`Bearer ${token}`}});if(r.status===403)return{_d:1};return await r.json()}catch{return{_e:1}}}
+function B(s){const m={Completed:'g',Delivered:'g',Approved:'g',Pass:'g',Placed:'b',Confirmed:'y',Dispatched:'y','In Transit':'y',Pending:'d',Draft:'d',Submitted:'b',Rejected:'r',Fail:'r',CREATE:'b',UPDATE:'y',APPROVE:'g',VIEW:'d',DELETE:'r',EXPORT:'p'};return`<span class="b b-${m[s]||'d'}">${s}</span>`}
+function denied(){return'<div class="denied"><div class="di">🔒</div><h3>Access Restricted</h3><p>Your current role does not have permission to access this section.</p></div>'}
+function buildNav(){const R=user.role,items=[{id:'overview',ic:'◈',l:'Overview',r:'ProcurementOfficer QualityInspector SupplyChainManager EquipmentEngineer Auditor',g:'Dashboard'},{id:'suppliers',ic:'⬡',l:'Suppliers',r:'ProcurementOfficer SupplyChainManager Auditor',g:'Operations'},{id:'orders',ic:'◰',l:'Orders',r:'ProcurementOfficer SupplyChainManager Auditor',g:'Operations'},{id:'shipments',ic:'◩',l:'Shipments',r:'ProcurementOfficer SupplyChainManager Auditor',g:'Operations'},{id:'qc',ic:'◉',l:'QC Reports',r:'QualityInspector SupplyChainManager Auditor',g:'Quality'},{id:'certs',ic:'◇',l:'Certifications',r:'QualityInspector Auditor',g:'Quality'},{id:'iot',ic:'◎',l:'IoT Monitor',r:'EquipmentEngineer SupplyChainManager',g:'Engineering'},{id:'audit',ic:'◫',l:'Audit Trail',r:'Auditor SupplyChainManager',g:'Security'}].filter(i=>i.r.includes(R));let h='',lg='';items.forEach(i=>{if(i.g!==lg){if(lg)h+='</div>';h+=`<div class="sb-section"><div class="sb-section-title">${i.g}</div>`;lg=i.g}h+=`<div class="sb-item" id="n-${i.id}" onclick="go('${i.id}')"><span class="ic">${i.ic}</span>${i.l}</div>`});h+='</div>';document.getElementById('sbNav').innerHTML=h}
+function go(id){document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));const el=document.getElementById(`n-${id}`);if(el)el.classList.add('active');const T={overview:'Overview',suppliers:'Supplier Directory',orders:'Purchase Orders',shipments:'Shipment Tracking',qc:'Quality Control Reports',certs:'Component Certifications',iot:'IoT Sensor Monitor',audit:'Audit Trail'};document.getElementById('pTitle').textContent=T[id]||id;document.getElementById('crumb').textContent=`Dashboard / ${T[id]}`;({overview:rO,suppliers:rS,orders:rOr,shipments:rSh,qc:rQ,certs:rC,iot:rI,audit:rA})[id]?.()}
+async function rO(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Fetching metrics...</div>';const s=await api('/dashboard/stats');if(s._e){c.innerHTML='<div class="loading">Connection error</div>';return}c.innerHTML=`<div class="stats"><div class="st"><div class="l">Suppliers</div><div class="v">${s.totalSuppliers}</div><div class="s">Registered partners</div></div><div class="st"><div class="l">Purchase Orders</div><div class="v">${s.totalOrders}</div><div class="s">Total issued</div></div><div class="st"><div class="l">Active Orders</div><div class="v">${s.activeOrders}</div><div class="s">In progress</div></div><div class="st"><div class="l">In Transit</div><div class="v">${s.shipmentsInTransit}</div><div class="s">Shipments en route</div></div><div class="st"><div class="l">Delivered</div><div class="v">${s.deliveredItems}</div><div class="s">Items received</div></div></div><div class="tbl-wrap"><div class="tbl-head"><h3>Order Distribution</h3></div><table><tr><th>Status</th><th>Count</th><th>Distribution</th></tr>${s.ordersByStatus.map(x=>{const pct=Math.round(x.count/s.totalOrders*100);return`<tr><td>${B(x.status)}</td><td style="color:#fff;font-weight:600">${x.count}</td><td><div style="background:var(--bg);border-radius:4px;height:8px;width:200px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--accent);border-radius:4px"></div></div></td></tr>`}).join('')}</table></div>`}
+async function rS(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading suppliers...</div>';const d=await api('/suppliers');if(d._d){c.innerHTML=denied();return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Registered Suppliers</h3><span class="cnt">${d.length} records</span></div><table><tr><th>ID</th><th>Business Name</th><th>Location</th><th>Accreditations</th><th>Primary Contact</th></tr>${d.map(s=>`<tr><td class="mono" style="color:var(--text-dim)">#${s.supplier_id}</td><td style="color:#fff;font-weight:500">${s.business_name}</td><td>${s.address||'—'}</td><td>${(s.accreditations||[]).map(a=>`<span class="b b-b" style="margin-right:3px">${a.type}</span>`).join('')||'—'}</td><td>${(s.contacts||[]).find(c=>c.primary)?.name||(s.contacts||[])[0]?.name||'—'}</td></tr>`).join('')}</table></div>`}
+async function rOr(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading orders...</div>';const d=await api('/orders');if(d._d){c.innerHTML=denied();return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>All Purchase Orders</h3><span class="cnt">${d.length} orders</span></div><table><tr><th>PO Number</th><th>Supplier</th><th>Ordered</th><th>Expected</th><th>Status</th><th>Lines</th></tr>${d.map(o=>`<tr><td class="mono" style="color:var(--accent);font-weight:600">PO-${String(o.order_id).padStart(4,'0')}</td><td style="color:#fff">${o.supplier_name}</td><td class="mono">${o.order_date?.split('T')[0]||'—'}</td><td class="mono">${o.desired_delivery_date?.split('T')[0]||'—'}</td><td>${B(o.status)}</td><td style="color:var(--text-dim)">${o.lines?.length||0}</td></tr>`).join('')}</table></div>`}
+async function rSh(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading shipments...</div>';const d=await api('/shipments');if(d._d){c.innerHTML=denied();return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Shipment Tracking</h3><span class="cnt">${d.length} tracked</span></div><table><tr><th>Shipment</th><th>Tracking No.</th><th>Supplier</th><th>Port of Entry</th><th>Status</th></tr>${d.map(s=>`<tr><td class="mono" style="color:var(--accent)">SHP-${String(s.shipment_id).padStart(4,'0')}</td><td class="mono" style="color:var(--text-muted)">${s.tracking_number}</td><td style="color:#fff">${s.supplier_name}</td><td>${s.port_of_entry}</td><td>${B(s.shipment_status)}</td></tr>`).join('')}</table></div>`}
+async function rQ(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading QC reports...</div>';const d=await api('/qc-reports');if(d._d){c.innerHTML=denied();return}if(!Array.isArray(d)){c.innerHTML='<div class="loading">No records</div>';return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Inspection Reports</h3><span class="cnt">${d.length} reports</span></div><table><tr><th>Report</th><th>Type</th><th>Component</th><th>Status</th><th>Rev</th><th>Outcome</th></tr>${d.map(r=>`<tr><td class="mono" style="color:var(--accent)">${r._id?.toString().slice(-8)}</td><td><span class="b b-p">${r.reportType}</span></td><td style="color:#fff">${r.partId||'—'}</td><td>${B(r.currentStatus)}</td><td style="color:var(--text-dim)">v${r.versions?.length||0}</td><td>${B(r.versions?.[r.versions.length-1]?.resultSummary||'Pending')}</td></tr>`).join('')}</table></div>`}
+async function rC(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading certifications...</div>';const d=await api('/certifications');if(d._d){c.innerHTML=denied();return}if(!Array.isArray(d)){c.innerHTML='<div class="loading">No records</div>';return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Component Certifications</h3><span class="cnt">${d.length} certificates</span></div><table><tr><th>Certificate</th><th>Item</th><th>Issued</th><th>Integrity</th><th>Approved By</th><th>Reference</th></tr>${d.map(x=>`<tr><td class="mono" style="color:var(--accent)">${x._id?.toString().slice(-8)}</td><td>Item #${x.deliveredItemId}</td><td class="mono">${new Date(x.issuedAt).toLocaleDateString()}</td><td>${x.isImmutable?'<span class="b b-r">🔒 Immutable</span>':'<span class="b b-g">✎ Editable</span>'}</td><td>${x.approvedByEmpId?'Emp #'+x.approvedByEmpId:'<span style="color:var(--text-dim)">Awaiting</span>'}</td><td class="mono" style="color:var(--text-dim)">${x.certificationDocRef||'—'}</td></tr>`).join('')}</table></div>`}
+async function rI(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Fetching telemetry...</div>';const d=await api('/iot/readings');if(d._d){c.innerHTML=denied();return}if(!Array.isArray(d)){c.innerHTML='<div class="loading">No data</div>';return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Sensor Telemetry</h3><span class="cnt">${d.length} readings</span></div><table><tr><th>Device</th><th>Asset</th><th>Timestamp</th><th>Temp °C</th><th>Vibration</th><th>Pressure</th><th>Health</th></tr>${d.map(r=>`<tr><td class="mono" style="color:var(--accent)">${r.deviceId}</td><td>${r.equipmentId||'Transit'}</td><td class="mono" style="color:var(--text-dim)">${new Date(r.timestamp).toLocaleString()}</td><td style="color:#fff;font-weight:600">${r.readings?.temperature??'—'}</td><td>${r.readings?.vibration??'—'}</td><td>${r.readings?.pressure??'—'}</td><td>${r.alerts?.length?'<span class="b b-r">⚠ Alert</span>':'<span class="b b-g">● Nominal</span>'}</td></tr>`).join('')}</table></div>`}
+async function rA(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading audit trail...</div>';const d=await api('/audit');if(d._d){c.innerHTML=denied();return}if(!Array.isArray(d)){c.innerHTML='<div class="loading">No entries</div>';return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Security Audit Trail</h3><span class="cnt">${d.length} events</span></div><table><tr><th>Timestamp</th><th>Operator</th><th>Action</th><th>Target</th><th>Ref</th><th>Details</th></tr>${d.map(a=>`<tr><td class="mono" style="font-size:11px;color:var(--text-dim)">${new Date(a.timestamp).toLocaleString()}</td><td style="color:#fff">${a.user_name}</td><td>${B(a.action_type)}</td><td><span class="b b-p">${a.entity_type}</span></td><td class="mono" style="color:var(--text-muted)">${a.entity_id||'—'}</td><td style="color:var(--text-dim);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.details||'—'}</td></tr>`).join('')}</table></div>`}
+document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')login()});
+document.getElementById('email').addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('password').focus()});
+</script>
+</body>
+</html>
