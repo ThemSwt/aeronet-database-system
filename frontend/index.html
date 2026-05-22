@@ -94,8 +94,7 @@
         .b-b{background:rgba(59,125,221,.1);color:#3b7ddd}.b-r{background:rgba(239,68,68,.1);color:#ef4444}
         .b-p{background:rgba(139,92,246,.1);color:#8b5cf6}.b-d{background:rgba(107,113,137,.1);color:#6b7189}
 
-        .footer{padding:16px 32px;border-top:1px solid var(--border);background:var(--surface);margin-left:250px;display:flex;justify-content:space-between;align-items:center}
-        .footer .fl{font-size:11px;color:var(--text-dim)}
+        .footer{padding:16px 32px;border-top:1px solid var(--border);background:var(--surface);display:flex;justify-content:space-between;align-items:center;width:100%}        .footer .fl{font-size:11px;color:var(--text-dim)}
         .footer .fl strong{color:var(--text-muted)}
         .footer .fr{display:flex;gap:12px}
         .footer .fr .chip{padding:3px 10px;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--text-muted);font-size:11px;font-weight:500}
@@ -136,8 +135,8 @@
     <main class="main">
         <div class="topbar"><div class="left"><div class="crumb" id="crumb">Dashboard</div><h1 id="pTitle">Overview</h1></div><div class="right"><div class="live">System Operational</div></div></div>
         <div class="content" id="content"></div>
-    </main>
-    <footer class="footer"><div class="fl">&copy; 2025 <strong>AeroNetB Aerospace</strong> &mdash; 5CM506 Data Driven Systems | Hybrid Cloud Architecture</div><div class="fr"><span class="chip">PostgreSQL</span><span class="chip">MongoDB Atlas</span><span class="chip">Node.js</span><span class="chip">REST API</span></div></footer>
+        <footer class="footer"><div class="fl">&copy; 2025 <strong>AeroNetB Aerospace</strong> &mdash; 5CM506 Data Driven Systems | Hybrid Cloud Architecture</div><div class="fr"><span class="chip">PostgreSQL</span><span class="chip">MongoDB Atlas</span><span class="chip">Node.js</span><span class="chip">REST API</span></div></footer>
+    </main>    
 </div>
 <script>
 const API=window.location.origin+'/api';let token='',user=null;
