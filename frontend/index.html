@@ -31,8 +31,9 @@
         .hero-content h2{font-size:38px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:16px}
         .hero-content h2 span{color:var(--accent)}
 
-        .app{display:none;height:100vh}
-        .sidebar{width:250px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:10;transition:width .2s}
+        /* Core Structure and Screen Alignment Matrix */
+        .app{display:none;min-height:100vh;width:100%;flex-direction:row}
+        .sidebar{width:250px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:10}
         .sb-logo{padding:26px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center}
         .sb-logo .text{font-size:16px;font-weight:800;color:#fff;letter-spacing:-0.3px;text-transform:uppercase}
         .sb-nav{flex:1;padding:20px 10px;overflow-y:auto}
@@ -44,7 +45,7 @@
         .sb-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--accent);border-radius:0 3px 3px 0}
         .sb-item .ic{font-size:16px;width:22px;text-align:center;opacity:0.7}
         .sb-item.active .ic{opacity:1}
-        .sb-foot{padding:16px 14px;border-top:1px solid var(--border)}
+        .sb-foot{padding:16px 24px;border-top:1px solid var(--border)}
         .sb-user{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
         .sb-uinfo{flex:1;min-width:0}
         .sb-uinfo .name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -52,28 +53,31 @@
         .sb-logout{background:none;border:1px solid var(--border);color:var(--text-muted);padding:5px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .15s;flex-shrink:0}
         .sb-logout:hover{border-color:var(--red);color:var(--red)}
 
-        .main{margin-left:250px;min-height:100vh;display:flex;flex-direction:column;transition:margin-left .2s}
-        .topbar{padding:18px 32px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;justify-content:space-between;align-items:center}
+        /* Main Viewport Workspace - Eradicates Empty Right Gaps */
+        .main{margin-left:250px;flex:1;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);width:calc(100% - 250px)}
+        .topbar{padding:18px 32px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;justify-content:space-between;align-items:center;width:100%}
         .topbar .left .crumb{font-size:12px;color:var(--text-dim);margin-bottom:2px}
         .topbar .left h1{font-size:18px;font-weight:700;color:#fff}
         .live{display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(14,207,125,0.08);border:1px solid rgba(14,207,125,0.15);border-radius:20px;color:var(--green);font-size:12px;font-weight:500}
         .live::before{content:'';width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-        .content{flex:1;padding:28px 32px}
+        
+        .content{flex:1;padding:28px 32px;width:100%;max-width:1600px}
 
-        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px}
-        .st{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .2s}
+        /* Fluid Metrics Dashboard Grid Layout */
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:28px;width:100%}
+        .st{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:border-color .2s}
         .st:hover{border-color:var(--border-hover)}
         .st .l{font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-        .st .v{font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px}
+        .st .v{font-size:32px;font-weight:800;color:#fff;letter-spacing:-1px}
         .st .s{font-size:11px;color:var(--text-dim);margin-top:4px}
 
-        .tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+        .tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;width:100%}
         .tbl-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
         .tbl-head h3{font-size:14px;font-weight:700;color:#fff}
         table{width:100%;border-collapse:collapse}
-        th{padding:11px 20px;text-align:left;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.7px;background:rgba(0,0,0,.25);border-bottom:1px solid var(--border)}
-        td{padding:13px 20px;font-size:13px;color:#c0c3ce;border-bottom:1px solid rgba(31,35,53,.6)}
+        th{padding:12px 20px;text-align:left;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.7px;background:rgba(0,0,0,.25);border-bottom:1px solid var(--border)}
+        td{padding:14px 20px;font-size:13px;color:#c0c3ce;border-bottom:1px solid rgba(31,35,53,.6)}
         tr:last-child td{border-bottom:none}
         tr:hover td{background:rgba(59,125,221,.03)}
         .mono{font-family:'Courier New',monospace;font-size:12px}
@@ -83,7 +87,8 @@
         .b-b{background:rgba(59,125,221,.1);color:#3b7ddd}.b-r{background:rgba(239,68,68,.1);color:#ef4444}
         .b-p{background:rgba(139,92,246,.1);color:#8b5cf6}.b-d{background:rgba(107,113,137,.1);color:#6b7189}
 
-        .footer{padding:16px 32px;border-top:1px solid var(--border);background:var(--surface);display:flex;justify-content:space-between;align-items:center;width:100%}
+        /* Secure Grounded Footer Alignment */
+        .footer{padding:20px 32px;border-top:1px solid var(--border);background:var(--surface);display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:auto}
         .footer .fl{font-size:11px;color:var(--text-dim)}
         .footer .fl strong{color:var(--text-muted)}
         .footer .fr{display:flex;gap:12px}
@@ -95,11 +100,14 @@
         .denied h3{color:var(--red);font-size:15px;font-weight:600;margin-bottom:6px}
         .denied p{color:var(--text-dim);font-size:13px}
         
-        @media(max-width:900px){
+        @media(max-width:950px){
             .login-left{display:none}
             .login-right{width:100%;border:none}
             .sidebar{width:220px}
-            .main{margin-left:220px}
+            .main{margin-left:220px;width:calc(100% - 220px)}
+        }
+        @media(max-width:650px){
+            .footer{flex-direction:column;gap:12px;text-align:center}
         }
     </style>
 </head>
@@ -140,7 +148,7 @@ function B(s){const m={Completed:'g',Delivered:'g',Approved:'g',Pass:'g',Placed:
 function denied(){return'<div class="denied"><div class="di">🔒</div><h3>Access Restricted</h3><p>Your current role does not have permission to access this section.</p></div>'}
 function buildNav(){const R=user.role,items=[{id:'overview',ic:'◈',l:'Overview',r:'ProcurementOfficer QualityInspector SupplyChainManager EquipmentEngineer Auditor',g:'Dashboard'},{id:'suppliers',ic:'⬡',l:'Suppliers',r:'ProcurementOfficer SupplyChainManager Auditor',g:'Operations'},{id:'orders',ic:'◰',l:'Orders',r:'ProcurementOfficer SupplyChainManager Auditor',g:'Operations'},{id:'shipments',ic:'◩',l:'Shipments',r:'ProcurementOfficer SupplyChainManager Auditor',g:'Operations'},{id:'qc',ic:'◉',l:'QC Reports',r:'QualityInspector SupplyChainManager Auditor',g:'Quality'},{id:'certs',ic:'◇',l:'Certifications',r:'QualityInspector Auditor',g:'Quality'},{id:'iot',ic:'◎',l:'IoT Monitor',r:'EquipmentEngineer SupplyChainManager',g:'Engineering'},{id:'audit',ic:'◫',l:'Audit Trail',r:'Auditor SupplyChainManager',g:'Security'}].filter(i=>i.r.includes(R));let h='',lg='';items.forEach(i=>{if(i.g!==lg){if(lg)h+='</div>';h+=`<div class="sb-section"><div class="sb-section-title">${i.g}</div>`;lg=i.g}h+=`<div class="sb-item" id="n-${i.id}" onclick="go('${i.id}')"><span class="ic">${i.ic}</span>${i.l}</div>`});h+='</div>';document.getElementById('sbNav').innerHTML=h}
 function go(id){document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));const el=document.getElementById(`n-${id}`);if(el)el.classList.add('active');const T={overview:'Overview',suppliers:'Supplier Directory',orders:'Purchase Orders',shipments:'Shipment Tracking',qc:'Quality Control Reports',certs:'Component Certifications',iot:'IoT Sensor Monitor',audit:'Audit Trail'};document.getElementById('pTitle').textContent=T[id]||id;document.getElementById('crumb').textContent=`Dashboard / ${T[id]}`;({overview:rO,suppliers:rS,orders:rOr,shipments:rSh,qc:rQ,certs:rC,iot:rI,audit:rA})[id]?.()}
-async function rO(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Fetching metrics...</div>';const s=await api('/dashboard/stats');if(s._e){c.innerHTML='<div class="loading">Connection error</div>';return}c.innerHTML=`<div class="stats"><div class="st"><div class="l">Suppliers</div><div class="v">${s.totalSuppliers}</div><div class="s">Registered partners</div></div><div class="st"><div class="l">Purchase Orders</div><div class="v">${s.totalOrders}</div><div class="s">Total issued</div></div><div class="st"><div class="l">Active Orders</div><div class="v">${s.activeOrders}</div><div class="s">In progress</div></div><div class="st"><div class="l">In Transit</div><div class="v">${s.shipmentsInTransit}</div><div class="s">Shipments en route</div></div><div class="st"><div class="l">Delivered</div><div class="v">${s.deliveredItems}</div><div class="s">Items received</div></div></div><div class="tbl-wrap"><div class="tbl-head"><h3>Order Distribution</h3></div><table><tr><th>Status</th><th>Count</th><th>Distribution</th></tr>${s.ordersByStatus.map(x=>{const pct=Math.round(x.count/s.totalOrders*100);return`<tr><td>${B(x.status)}</td><td style="color:#fff;font-weight:600">${x.count}</td><td><div style="background:var(--bg);border-radius:4px;height:8px;width:200px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--accent);border-radius:4px"></div></div></td></tr>`}).join('')}</table></div>`}
+async function rO(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Fetching metrics...</div>';const s=await api('/dashboard/stats');if(s._e){c.innerHTML='<div class="loading">Connection error</div>';return}c.innerHTML=`<div class="stats"><div class="st"><div class="l">Suppliers</div><div class="v">${s.totalSuppliers}</div><div class="s">Registered partners</div></div><div class="st"><div class="l">Purchase Orders</div><div class="v">${s.totalOrders}</div><div class="s">Total issued</div></div><div class="st"><div class="l">Active Orders</div><div class="v">${s.activeOrders}</div><div class="s">In progress</div></div><div class="st"><div class="l">In Transit</div><div class="v">${s.shipmentsInTransit}</div><div class="s">Shipments en route</div></div><div class="st"><div class="l">Delivered</div><div class="v">${s.deliveredItems}</div><div class="s">Items received</div></div></div><div class="tbl-wrap"><div class="tbl-head"><h3>Order Distribution</h3></div><table><tr><th>Status</th><th>Count</th><th>Distribution</th></tr>${s.ordersByStatus.map(x=>{const pct=Math.round(x.count/s.totalOrders*100);return`<tr><td>${B(x.status)}</td><td style="color:#fff;font-weight:600">${x.count}</td><td><div style="background:var(--bg);border-radius:4px;height:8px;width:100%;max-width:300px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--accent);border-radius:4px"></div></div></td></tr>`}).join('')}</table></div>`}
 async function rS(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading suppliers...</div>';const d=await api('/suppliers');if(d._d){c.innerHTML=denied();return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Registered Suppliers</h3></div><table><tr><th>ID</th><th>Business Name</th><th>Location</th><th>Accreditations</th><th>Primary Contact</th></tr>${d.map(s=>`<tr><td class="mono" style="color:var(--text-dim)">#${s.supplier_id}</td><td style="color:#fff;font-weight:500">${s.business_name}</td><td>${s.address||'—'}</td><td>${(s.accreditations||[]).map(a=>`<span class="b b-b" style="margin-right:3px">${a.type}</span>`).join('')||'—'}</td><td>${(s.contacts||[]).find(c=>c.primary)?.name||(s.contacts||[])[0]?.name||'—'}</td></tr>`).join('')}</table></div>`}
 async function rOr(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading orders...</div>';const d=await api('/orders');if(d._d){c.innerHTML=denied();return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>All Purchase Orders</h3></div><table><tr><th>PO Number</th><th>Supplier</th><th>Ordered</th><th>Expected</th><th>Status</th><th>Lines</th></tr>${d.map(o=>`<tr><td class="mono" style="color:var(--accent);font-weight:600">PO-${String(o.order_id).padStart(4,'0')}</td><td style="color:#fff">${o.supplier_name}</td><td class="mono">${o.order_date?.split('T')[0]||'—'}</td><td class="mono">${o.desired_delivery_date?.split('T')[0]||'—'}</td><td>${B(o.status)}</td><td style="color:var(--text-dim)">${o.lines?.length||0}</td></tr>`).join('')}</table></div>`}
 async function rSh(){const c=document.getElementById('content');c.innerHTML='<div class="loading">Loading shipments...</div>';const d=await api('/shipments');if(d._d){c.innerHTML=denied();return}c.innerHTML=`<div class="tbl-wrap"><div class="tbl-head"><h3>Shipment Tracking</h3></div><table><tr><th>Shipment</th><th>Tracking No.</th><th>Supplier</th><th>Port of Entry</th><th>Status</th></tr>${d.map(s=>`<tr><td class="mono" style="color:var(--accent)">SHP-${String(s.shipment_id).padStart(4,'0')}</td><td class="mono" style="color:var(--text-muted)">${s.tracking_number}</td><td style="color:#fff">${s.supplier_name}</td><td>${s.port_of_entry}</td><td>${B(s.shipment_status)}</td></tr>`).join('')}</table></div>`}
